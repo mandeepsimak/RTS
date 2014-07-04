@@ -16,7 +16,6 @@
 
 #include "header.h"
 
-
 /**
  *      \class  Schedular
  *      \brief  Implementing Rate Monotonic Scheduling Algorithm
@@ -26,19 +25,24 @@ class Schedular
 {
     private:
         int maxTask;                                           /**< Max Task */
-        float maxProUtilization;           /**< Total Processor Utilization by
-                                                all tasks */
+        float maxProUtilization,          /**< Total Processor Utilization 
+                                              by all tasks */
+              overloadProUtilization;          /**< processor utilization 
+                                                 under transient overload*/
 
-        FLOAT_2DVEC taskExeTime,                     **< Task Execution Time */
-                    taskPeriod,                              **< Task Period */
-                    taskUtiliation;               /**< Processor Utilization */
+        FLOAT_VEC taskExeTime,                      /**< Task Execution Time */
+                  taskPeriod,                               /**< Task Period */
+                  taskUtiliation;                 /**< Processor Utilization */
         
-        STRING_2DVEC taskPriority;                      /**< Task's Priority */
+        STRING_VEC taskPriority;                        /**< Task's Priority */
 
-    public:        
+    public:
+        Schedular();
         void ProcessorUtilization(int maxTask);
-        bool IsTaskSchedulable(float maxUtilization);
-}
+        bool IsTaskSchedulable(float maxProUtilization, int maxTask);
+        void Main();
+        ~Schedular();
+};
 
 #endif   /* #ifndef SCHEDULAR_H */
 

@@ -25,12 +25,12 @@ using namespace std;
  *  Typedef variables for using vector definiton
  */
 
-//typedef vector<string> STRING_VEC;
-typedef vector<vector<string> > STRING_2DVEC;
+typedef vector<string> STRING_VEC;
+//typedef vector<vector<string> > STRING_2DVEC;
 //typedef vector<vector<vector<string> > > STRING_3DVEC;
 //typedef vector<vector<vector<vector<string> > > > STRING_4DVEC;
-typedef vector<vector<vector<float> > > FLOAT_3DVEC;
-typedef vector<vector<float> > FLOAT_2DVEC;
+//typedef vector<vector<vector<float> > > FLOAT_3DVEC;
+//typedef vector<vector<float> > FLOAT_2DVEC;
 typedef vector<float> FLOAT_VEC;
 
 #endif   /* #ifndef HEADER_H */
