@@ -39,7 +39,7 @@ class Schedular
     public:
         Schedular();
         void ProcessorUtilization(int maxTask);
-        bool IsTaskSchedulable(float maxProUtilization, int maxTask);
+        bool IsTaskSchedulable(float maxProUtilization, float maxTask);
         void Main();
         ~Schedular();
 };

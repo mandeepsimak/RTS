@@ -12,6 +12,7 @@
  */
 
 #include "header/schedular.h"
+#include <cmath>
 
 Schedular :: Schedular()
 {
@@ -54,28 +55,22 @@ void Schedular :: ProcessorUtilization(int maxTask)
  *              
  *              The processor utilization must adhere to the following rule:
  *
- *              Utilization = maximum_tasks * (2(1/maximum_tasks) - 1)
+ *              Utilization = maximum_tasks * (2^(1/maximum_tasks) - 1)
  *
  *      \param  maxProUtilization  Max. processor utilization by all tasks
  *      \param  maxTask Max. no of tasks
  *      \retrn  Returns true if tasks are schedulable otherwise false
  */
 
-bool Schedular :: IsTaskSchedulable(float maxProUtilization, int maxTask)
+bool Schedular :: IsTaskSchedulable(float maxProUtilization, float maxTask)
 {
-    float two = 2, one = 1;
-    /* 
-    cout << "1/maxtask: " << (1/(float)maxTask) << "\t 2*result: " ;
-            float val = (((float)2 * (1/(float)maxTask)));
-            cout  <<  "val "  <<  val <<  endl;
-    cout << " \t -1 "  <<(float) ( (float)maxTask * (float)(val) )
-//            << (float) ( ((float)maxTask * (2 * (1/(float)maxTask))) -1) 
-            << endl;
-*/
-    cout  << (float) ((float)3 * (float)((float)2 * (float)(1/(float)3) - (float)1))  <<  endl;
-    overloadProUtilization = ((float)maxTask * (float)((two * (one / (float)maxTask)) - one));
+    /*float load = pow (2.0, (1 / maxTask));
+    cout << load << " < load" << endl;*/
 
-    cout << "max: " << maxProUtilization << "\t over:" << overloadProUtilization << endl;
+
+    overloadProUtilization = (maxTask * (pow (2.0, (1 / maxTask - 1))));
+
+//    cout << "max: " << maxProUtilization << "\t over:" << overloadProUtilization << endl;
     
     if(maxProUtilization < overloadProUtilization)
         return true;
