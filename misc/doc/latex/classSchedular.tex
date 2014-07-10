@@ -1,0 +1,97 @@
+\hypertarget{classSchedular}{\section{Schedular Class Reference}
+\label{classSchedular}\index{Schedular@{Schedular}}
+}
+
+
+Implementing Rate Monotonic Scheduling Algorithm.  
+
+
+
+
+{\ttfamily \#include $<$schedular.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classSchedular_a1f7fbcdc2aa6432f96bad813c8ab14f3}{Processor\-Utilization} (int max\-Task)
+\begin{DoxyCompactList}\small\item\em Processor Utilization Rule requires that processor utilization be calculated based upon the period and execution time of each task. \end{DoxyCompactList}\item 
+bool \hyperlink{classSchedular_ac401612689533e76bc9b9cdb2ac347b6}{Is\-Task\-Schedulable} (float max\-Pro\-Utilization, float max\-Task)
+\begin{DoxyCompactList}\small\item\em To insure schedulability even under transient overload. \end{DoxyCompactList}\item 
+\hypertarget{classSchedular_a56d368a0eb92ff5801a0f5bed8df4c4a}{void \hyperlink{classSchedular_a56d368a0eb92ff5801a0f5bed8df4c4a}{Main} ()}\label{classSchedular_a56d368a0eb92ff5801a0f5bed8df4c4a}
+
+\begin{DoxyCompactList}\small\item\em Main function for calling other functions and implementing schedular. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Implementing Rate Monotonic Scheduling Algorithm. 
+
+Definition at line 24 of file schedular.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classSchedular_ac401612689533e76bc9b9cdb2ac347b6}{\index{Schedular@{Schedular}!Is\-Task\-Schedulable@{Is\-Task\-Schedulable}}
+\index{Is\-Task\-Schedulable@{Is\-Task\-Schedulable}!Schedular@{Schedular}}
+\subsubsection[{Is\-Task\-Schedulable}]{\setlength{\rightskip}{0pt plus 5cm}bool Schedular\-::\-Is\-Task\-Schedulable (
+\begin{DoxyParamCaption}
+\item[{float}]{max\-Pro\-Utilization, }
+\item[{float}]{max\-Task}
+\end{DoxyParamCaption}
+)}}\label{classSchedular_ac401612689533e76bc9b9cdb2ac347b6}
+
+
+To insure schedulability even under transient overload. 
+
+\begin{DoxyVerb}    The processor utilization must adhere to the following rule:
+
+    Utilization = maximum_tasks * (2^(1/maximum_tasks) - 1)
+\end{DoxyVerb}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em max\-Pro\-Utilization} & Max. processor utilization by all tasks \\
+\hline
+{\em max\-Task} & Max. no of tasks  Returns true if tasks are schedulable otherwise false \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 65 of file schedular.\-cc.
+
+\hypertarget{classSchedular_a1f7fbcdc2aa6432f96bad813c8ab14f3}{\index{Schedular@{Schedular}!Processor\-Utilization@{Processor\-Utilization}}
+\index{Processor\-Utilization@{Processor\-Utilization}!Schedular@{Schedular}}
+\subsubsection[{Processor\-Utilization}]{\setlength{\rightskip}{0pt plus 5cm}void Schedular\-::\-Processor\-Utilization (
+\begin{DoxyParamCaption}
+\item[{int}]{max\-Task}
+\end{DoxyParamCaption}
+)}}\label{classSchedular_a1f7fbcdc2aa6432f96bad813c8ab14f3}
+
+
+Processor Utilization Rule requires that processor utilization be calculated based upon the period and execution time of each task. 
+
+\begin{DoxyVerb}    The processor utilization can be calculated as follows:
+
+    Utilization = 0
+
+    for index = 1 to maximum_tasks
+
+    Utilization = Utilization + (Time(index)/Period(index))
+\end{DoxyVerb}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em max\-Task} & Total no of task for scheduling \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 40 of file schedular.\-cc.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+/media/\-Work/\-R\-T\-S/project/\-R\-M\-S/src/header/\hyperlink{schedular_8h}{schedular.\-h}\item 
+/media/\-Work/\-R\-T\-S/project/\-R\-M\-S/src/\hyperlink{schedular_8cc}{schedular.\-cc}\end{DoxyCompactItemize}
