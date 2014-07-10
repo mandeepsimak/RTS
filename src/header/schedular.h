@@ -27,8 +27,12 @@ class Schedular
         int maxTask;                                           /**< Max Task */
         float maxProUtilization,          /**< Total Processor Utilization 
                                               by all tasks */
-              overloadProUtilization;          /**< processor utilization 
+              overloadProUtilization,          /**< processor utilization 
                                                  under transient overload*/
+              deadlineTime;               /**<time to check if tasks meet
+                                            their deadlines in case they exceed
+                                            processor utilization Upper Limit*/
+
 
         FLOAT_VEC taskExeTime,                      /**< Task Execution Time */
                   taskPeriod,                               /**< Task Period */

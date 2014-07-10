@@ -45,6 +45,8 @@ void Schedular :: ProcessorUtilization(int maxTask)
 
         maxProUtilization += taskUtiliation[i];    
     }
+
+    cout<<"utilization="<<maxProUtilization;
 }
 
 /**
@@ -68,14 +70,29 @@ bool Schedular :: IsTaskSchedulable(float maxProUtilization, float maxTask)
     cout << load << " < load" << endl;*/
 
 
-    overloadProUtilization = (maxTask * (pow (2.0, (1 / maxTask - 1))));
+    overloadProUtilization = (maxTask * (pow (2.0, 1 / maxTask) - 1));
+    cout<<"\n Limit = "<<overloadProUtilization;
 
 //    cout << "max: " << maxProUtilization << "\t over:" << overloadProUtilization << endl;
     
     if(maxProUtilization < overloadProUtilization)
         return true;
     else
-        return false;
+    {
+        int taskExeTimeSum=0;
+        cout << "\nEnter the Deadline Time";
+        cin >> deadlineTime;
+
+        for(auto i = 0; i < maxTask; i++)
+        {
+        	taskExeTimeSum += taskExeTime[i];
+        }
+        cout<<taskExeTimeSum;
+        if(taskExeTimeSum <= deadlineTime)
+        	return true;
+        else
+        	return false;
+    }
 }
 
 
@@ -90,6 +107,7 @@ void Schedular :: Main()
 {
 /*     cout << "\nRate Monotonic Schedular" << endl
          << "\nEnter maximum no. of tasks: ";*/
+    cout<<"enter max task";
     cin >> maxTask;
 
     taskPeriod.resize(maxTask);
@@ -105,8 +123,10 @@ void Schedular :: Main()
 //             << "Priority (H:High | M:Medium | L:Low): ";
 //        cin >> taskPriority[i];
 //        cout << "Period: ";
+    	cout<<"\nEnter Period";
         cin >> taskPeriod[i];
 //        cout << "Execution Time: ";
+        cout<<"\nEnter Exe time";
         cin >> taskExeTime[i] ;
     }
 
