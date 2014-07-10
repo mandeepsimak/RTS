@@ -64,14 +64,9 @@ void Schedular :: ProcessorUtilization(int maxTask)
 
 bool Schedular :: IsTaskSchedulable(float maxProUtilization, float maxTask)
 {
-    /*float load = pow (2.0, (1 / maxTask));
-    cout << load << " < load" << endl;*/
-
-
-    overloadProUtilization = (maxTask * (pow (2.0, (1 / maxTask - 1))));
-
-//    cout << "max: " << maxProUtilization << "\t over:" << overloadProUtilization << endl;
-    
+    overloadProUtilization = (maxTask * ((pow (2.0, (1 / maxTask)) - 1)));
+    cout << "max: "  <<  maxProUtilization << "\t overload: " 
+         << overloadProUtilization << endl;
     if(maxProUtilization < overloadProUtilization)
         return true;
     else

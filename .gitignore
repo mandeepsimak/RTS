@@ -20,7 +20,7 @@
 *.out
 *.app
 
-src/.*.swp
 .*.swp
-
+.*.swp
+.*.swo
 build
