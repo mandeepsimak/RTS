@@ -24,7 +24,9 @@
 class Schedular
 {
     private:
-        int maxTask;                                           /**< Max Task */
+        int maxTask,                                           /**< Max Task */
+            unschedulableEvent;
+
         float maxProUtilization,          /**< Total Processor Utilization 
                                               by all tasks */
               overloadProUtilization,          /**< processor utilization 
@@ -42,7 +44,7 @@ class Schedular
 
     public:
         Schedular();
-        void ProcessorUtilization(int maxTask);
+        void ProcessorUtilization(float maxTask);
         bool IsTaskSchedulable(float maxProUtilization, float maxTask);
         void Main();
         ~Schedular();

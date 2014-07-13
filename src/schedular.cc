@@ -37,16 +37,21 @@ Schedular :: Schedular()
  *      \param  maxTask Total no of task for scheduling
  */
 
-void Schedular :: ProcessorUtilization(int maxTask)
+void Schedular :: ProcessorUtilization(float maxTask)
 {
-    for(auto i = 0; i < maxTask; i++)
+    for(float i = 0; i < maxTask; i++)
     {
         taskUtiliation[i] = (taskExeTime[i] / taskPeriod[i]) ;
 
-        maxProUtilization += taskUtiliation[i];    
+        maxProUtilization += taskUtiliation[i];
+        
+        
+        overloadProUtilization = ((i+1) * (pow (2.0, 1 / (i+1)) - 1));
+
+        if(maxProUtilization > overloadProUtilization)
+        	unschedulableEvent = i+1;	
     }
 
-    cout<<"utilization="<<maxProUtilization;
 }
 
 /**
@@ -58,7 +63,7 @@ void Schedular :: ProcessorUtilization(int maxTask)
  *              The processor utilization must adhere to the following rule:
  *
  *              Utilization = maximum_tasks * (2^(1/maximum_tasks) - 1)
- *
+ *	
  *      \param  maxProUtilization  Max. processor utilization by all tasks
  *      \param  maxTask Max. no of tasks
  *      \retrn  Returns true if tasks are schedulable otherwise false
@@ -66,35 +71,43 @@ void Schedular :: ProcessorUtilization(int maxTask)
 
 bool Schedular :: IsTaskSchedulable(float maxProUtilization, float maxTask)
 {
-    /*float load = pow (2.0, (1 / maxTask));
-    cout << load << " < load" << endl;*/
+    if(!unschedulableEvent)
+		return true;
 
-
-    overloadProUtilization = (maxTask * (pow (2.0, 1 / maxTask) - 1));
-    cout<<"\n Limit = "<<overloadProUtilization;
-
-//    cout << "max: " << maxProUtilization << "\t over:" << overloadProUtilization << endl;
-    
-    if(maxProUtilization < overloadProUtilization)
-        return true;
     else
     {
-        int taskExeTimeSum=0;
-        cout << "\nEnter the Deadline Time";
-        cin >> deadlineTime;
+    	cout<<"\nTasks not Schedulable by Processor Utilization Rule";
+    	cout<<"\nApplying the First Deadline Principal"<<endl;
 
-        for(auto i = 0; i < maxTask; i++)
-        {
-        	taskExeTimeSum += taskExeTime[i];
-        }
-        cout<<taskExeTimeSum;
-        if(taskExeTimeSum <= deadlineTime)
-        	return true;
-        else
-        	return false;
+    	float a0=0,a1,check=0;
+
+    	for(auto i = 0; i < unschedulableEvent; i++)
+    		a0 += taskExeTime[i];
+
+    		for(int z = 0; z < unschedulableEvent; z++)
+			{				
+				a1=0;
+				
+				for(int j=0; j<(unschedulableEvent-1); j++)
+					a1 += (ceil(a0/taskPeriod[j]))*taskExeTime[j];
+				a1 += taskExeTime[unschedulableEvent-1];
+				
+				if(a1==a0)
+					{
+						check=1;
+						goto label;
+					}
+				else
+					a0=a1;
+			}
+
+			label:
+			if(check==1)	
+				return true;
+			else	
+				return false;
     }
 }
-
 
 /**
  *      \class  Schedular
@@ -137,7 +150,7 @@ void Schedular :: Main()
         cout << "\n Tasks are schedulable!" << endl;
     }
     else
-        cout << "\n Tasks are not schedulable!" << endl;
+       cout << "\n Tasks are not schedulable!" << endl;
 }
 
 Schedular :: ~Schedular()
