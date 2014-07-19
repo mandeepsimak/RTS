@@ -71,6 +71,9 @@ void Schedular :: ProcessorUtilization(float maxTask)
 
 bool Schedular :: IsTaskSchedulable(float maxProUtilization, float maxTask)
 {
+    cout<<"\nTotal Processor Utilization = "<<maxProUtilization;
+    cout<<"\nMaximum allowed Utilization = "<<overloadProUtilization<<endl;
+
     if(!unschedulableEvent)
 		return true;
 
@@ -120,14 +123,14 @@ bool Schedular :: IsTaskSchedulable(float maxProUtilization, float maxTask)
  *      \param  maxTask Max. no of tasks
  */
 
-void Schedular :: Timeline(float maxTask)
+void Schedular :: Timeline(int maxTask)
 {
 
-	for(float i=0; i<maxTask; i++)
+	for(auto i=0; i<maxTask; i++)
 	{
         auto min=i;
         
-        for(float j=i+1;j<maxTask;j++)
+        for(auto j=i+1;j<maxTask;j++)
         {
         	if(taskPeriod[min] > taskPeriod[j])
             {
@@ -139,17 +142,17 @@ void Schedular :: Timeline(float maxTask)
         taskPeriod[min] = taskPeriod[i];
         taskPeriod[i] = tmp;
 
-        auto tmp1 = taskExeTime[min];
+        tmp = taskExeTime[min];
         taskExeTime[min] = taskExeTime[i];
-        taskExeTime[i] = tmp1;
+        taskExeTime[i] = tmp;
 
-        auto tmp2 = taskPriority[min];
+        tmp = taskPriority[min];
         taskPriority[min] = taskPriority[i];
-        taskPriority[i] = tmp2;
+        taskPriority[i] = tmp;
     }
 
     cout<<"\nTask Prority is as follows(Decreasing order):";
-    for(float i=0; i<maxTask; i++)
+    for(auto i=0; i<maxTask; i++)
     	cout<<"task"<<taskPriority[i]<<" ";
     	cout<<endl;
 
@@ -160,14 +163,15 @@ void Schedular :: Timeline(float maxTask)
     vector<int> periodCheck;
     periodCheck.resize(maxTask);
 
-    for(float i=0; i<maxTask; i++)
+    for(auto i=0; i<maxTask; i++)
     {
-    	cout<<"\n"<<taskPriority[i]
+    	periodCheck[i]=1;
+    	cout<<"\n"<<taskPriority[i]<<"."<<periodCheck[i]
     		<<"\t"<<timeCheck
     		<<"\t"<<timeCheck+taskExeTime[i];
 
     	timeCheck += taskExeTime[i];
-    	periodCheck[i]=1;
+    	
     }
 
     while(timeCheck < taskPeriod[maxTask-1])
@@ -176,12 +180,13 @@ void Schedular :: Timeline(float maxTask)
     	{ 
     		if(timeCheck >= taskPeriod[i]*periodCheck[i])
     		{
-    			cout<<"\n"<<taskPriority[i]
+    			periodCheck[i]++;
+    			cout<<"\n"<<taskPriority[i]<<"."<<periodCheck[i]
     				<<"\t"<<timeCheck
     				<<"\t"<<timeCheck+taskExeTime[i];
 
     			timeCheck += taskExeTime[i];			
-    			periodCheck[i]++;
+    			
     		}	
     	}
     }

@@ -47,7 +47,7 @@ class Schedular
         void ProcessorUtilization(float maxTask);
         bool IsTaskSchedulable(float maxProUtilization, float maxTask);
         void Main();
-        void Timeline(float);
+        void Timeline(int);
         
         ~Schedular();
 };
