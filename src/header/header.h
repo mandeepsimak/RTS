@@ -32,6 +32,7 @@ typedef vector<string> STRING_VEC;
 //typedef vector<vector<vector<float> > > FLOAT_3DVEC;
 //typedef vector<vector<float> > FLOAT_2DVEC;
 typedef vector<float> FLOAT_VEC;
+typedef vector<int> INT_VEC;
 
 #endif   /* #ifndef HEADER_H */
 

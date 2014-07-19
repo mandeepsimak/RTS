@@ -38,15 +38,17 @@ class Schedular
 
         FLOAT_VEC taskExeTime,                      /**< Task Execution Time */
                   taskPeriod,                               /**< Task Period */
-                  taskUtiliation;                 /**< Processor Utilization */
-        
-        STRING_VEC taskPriority;                        /**< Task's Priority */
+                  taskUtilization;                 /**< Processor Utilization */
+                  
+          INT_VEC taskPriority;                        /**< Task's Priority */
 
     public:
         Schedular();
         void ProcessorUtilization(float maxTask);
         bool IsTaskSchedulable(float maxProUtilization, float maxTask);
         void Main();
+        void Timeline(float);
+        
         ~Schedular();
 };
 

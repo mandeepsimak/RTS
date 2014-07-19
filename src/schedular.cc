@@ -41,9 +41,9 @@ void Schedular :: ProcessorUtilization(float maxTask)
 {
     for(float i = 0; i < maxTask; i++)
     {
-        taskUtiliation[i] = (taskExeTime[i] / taskPeriod[i]) ;
+        taskUtilization[i] = (taskExeTime[i] / taskPeriod[i]) ;
 
-        maxProUtilization += taskUtiliation[i];
+        maxProUtilization += taskUtilization[i];
         
         
         overloadProUtilization = ((i+1) * (pow (2.0, 1 / (i+1)) - 1));
@@ -111,6 +111,84 @@ bool Schedular :: IsTaskSchedulable(float maxProUtilization, float maxTask)
 
 /**
  *      \class  Schedular
+ *      \fn     Schedular :: Timeline(float maxTask)
+ *      \brief  If the tasks are schedulable then
+ *				Sort the tasks according to priority(1/period)
+ *
+ *				Generate a timeline for all the tasks
+ *
+ *      \param  maxTask Max. no of tasks
+ */
+
+void Schedular :: Timeline(float maxTask)
+{
+
+	for(float i=0; i<maxTask; i++)
+	{
+        auto min=i;
+        
+        for(float j=i+1;j<maxTask;j++)
+        {
+        	if(taskPeriod[min] > taskPeriod[j])
+            {
+                min=j;
+            }
+        }
+
+        auto tmp = taskPeriod[min];
+        taskPeriod[min] = taskPeriod[i];
+        taskPeriod[i] = tmp;
+
+        auto tmp1 = taskExeTime[min];
+        taskExeTime[min] = taskExeTime[i];
+        taskExeTime[i] = tmp1;
+
+        auto tmp2 = taskPriority[min];
+        taskPriority[min] = taskPriority[i];
+        taskPriority[i] = tmp2;
+    }
+
+    cout<<"\nTask Prority is as follows(Decreasing order):";
+    for(float i=0; i<maxTask; i++)
+    	cout<<"task"<<taskPriority[i]<<" ";
+    	cout<<endl;
+
+    cout<<"\n\tTIMELINE"
+    	<<"\nTask\tFrom\tTo";
+
+    auto timeCheck=0;
+    vector<int> periodCheck;
+    periodCheck.resize(maxTask);
+
+    for(float i=0; i<maxTask; i++)
+    {
+    	cout<<"\n"<<taskPriority[i]
+    		<<"\t"<<timeCheck
+    		<<"\t"<<timeCheck+taskExeTime[i];
+
+    	timeCheck += taskExeTime[i];
+    	periodCheck[i]=1;
+    }
+
+    while(timeCheck < taskPeriod[maxTask-1])
+    {
+    	for (auto i = 0; i < maxTask; ++i)
+    	{ 
+    		if(timeCheck >= taskPeriod[i]*periodCheck[i])
+    		{
+    			cout<<"\n"<<taskPriority[i]
+    				<<"\t"<<timeCheck
+    				<<"\t"<<timeCheck+taskExeTime[i];
+
+    			timeCheck += taskExeTime[i];			
+    			periodCheck[i]++;
+    		}	
+    	}
+    }
+}
+
+/**
+ *      \class  Schedular
  *      \fn     Schedular :: Main()
  *      \brief  Main function for calling other functions and implementing
  *              schedular
@@ -118,29 +196,25 @@ bool Schedular :: IsTaskSchedulable(float maxProUtilization, float maxTask)
 
 void Schedular :: Main()
 {
-/*     cout << "\nRate Monotonic Schedular" << endl
-         << "\nEnter maximum no. of tasks: ";*/
-    cout<<"enter max task";
+    cout << "\nRate Monotonic Schedular" << endl
+          << "\nEnter maximum no. of tasks: ";
     cin >> maxTask;
 
     taskPeriod.resize(maxTask);
     taskPriority.resize(maxTask);
     taskExeTime.resize(maxTask);
-    taskUtiliation.resize(maxTask);
+    taskUtilization.resize(maxTask);
 
-//    cout << "Enter details of task:" << endl;
 
     for(auto i = 0; i < maxTask; i++)
     {
-//        cout << "Task " << (i + 1) << endl
-//             << "Priority (H:High | M:Medium | L:Low): ";
-//        cin >> taskPriority[i];
-//        cout << "Period: ";
     	cout<<"\nEnter Period";
         cin >> taskPeriod[i];
-//        cout << "Execution Time: ";
+
         cout<<"\nEnter Exe time";
         cin >> taskExeTime[i] ;
+
+        taskPriority[i]=i+1;
     }
 
     ProcessorUtilization(maxTask);
@@ -148,9 +222,12 @@ void Schedular :: Main()
     if(IsTaskSchedulable(maxProUtilization, maxTask))
     {
         cout << "\n Tasks are schedulable!" << endl;
-    }
+    
+        Timeline(maxTask);
+	}
     else
        cout << "\n Tasks are not schedulable!" << endl;
+    
 }
 
 Schedular :: ~Schedular()
