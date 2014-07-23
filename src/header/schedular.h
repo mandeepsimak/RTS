@@ -45,7 +45,8 @@ class Schedular
     public:
         Schedular();
         void ProcessorUtilization(float maxTask);
-        bool IsTaskSchedulable(float maxProUtilization, float maxTask);
+        bool Theorem2(float maxTask);
+        bool ResponseTimeMethod(float maxTask);
         void Main();
         void Timeline(int);
         
