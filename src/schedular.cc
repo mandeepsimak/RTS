@@ -49,21 +49,21 @@ void Schedular :: ProcessorUtilization(float maxTask)
         overloadProUtilization = ((i+1) * (pow (2.0, 1 / (i+1)) - 1));
 
         if(maxProUtilization > overloadProUtilization)
-        	unschedulableEvent = i+1;	
+            unschedulableEvent = i+1;   
     }
 
     cout<<"\nTotal Processor Utilization = "<<maxProUtilization;
     cout<<"\nMaximum allowed Utilization = "<<overloadProUtilization<<endl;
 
     if(!unschedulableEvent)
-	{
-		cout<<"Tasks are schedulable using Processor Utilization Rule";
-		cout<<"\nApplying the Response Time Principal"<<endl;
-	}
+    {
+        cout<<"Tasks are schedulable using Processor Utilization Rule";
+        cout<<"\nApplying the Response Time Principal"<<endl;
+    }
     else
     {
-    	cout<<"\nTasks not Schedulable by Processor Utilization Rule";
-    	cout<<"\nApplying the Response Time Principal"<<endl;
+        cout<<"\nTasks not Schedulable by Processor Utilization Rule";
+        cout<<"\nApplying the Response Time Principal"<<endl;
     }
 }
 /**
@@ -75,20 +75,20 @@ void Schedular :: ProcessorUtilization(float maxTask)
 
 bool Schedular :: Theorem2(float maxTask)
 {
-	for(auto i = 0; i < unschedulableEvent; i++)
-	{
-		auto limit = floor(taskPeriod[unschedulableEvent-1]/taskPeriod[i]);
+    for(auto i = 0; i < unschedulableEvent; i++)
+    {
+        auto limit = floor(taskPeriod[unschedulableEvent-1]/taskPeriod[i]);
 
-		for(auto l = 1; l <= limit; l++)
-		{
-			float temp=0;
-			for(auto j = 0; j < unschedulableEvent; j++)	
-			temp += ceil((taskPeriod[i]/taskPeriod[j])*l)*(taskExeTime[j]/(l*taskPeriod[i]));
+        for(auto l = 1; l <= limit; l++)
+        {
+            float temp=0;
+            for(auto j = 0; j < unschedulableEvent; j++)    
+            temp += ceil((taskPeriod[i]/taskPeriod[j])*l)*(taskExeTime[j]/(l*taskPeriod[i]));
 
-			if (temp<=1)
-				return 1;
-		}
-	}
+            if (temp<=1)
+                return 1;
+        }
+    }
 }
 
 
@@ -100,7 +100,7 @@ bool Schedular :: Theorem2(float maxTask)
  *              The processor utilization must adhere to the following rule:
  *
  *              Utilization = maximum_tasks * (2^(1/maximum_tasks) - 1)
- *	
+ *  
  *      \param  maxProUtilization  Max. processor utilization by all tasks
  *      \param  maxTask Max. no of tasks
  *      \retrn  Returns true if tasks are schedulable otherwise false
@@ -108,42 +108,42 @@ bool Schedular :: Theorem2(float maxTask)
 
 bool Schedular :: ResponseTimeMethod(float maxTask)
 {
-   	float a0=0,a1,check=0;
+    float a0=0,a1,check=0;
 
-   	for(auto i = 0; i < unschedulableEvent; i++)
-   		a0 += taskExeTime[i];
+    for(auto i = 0; i < unschedulableEvent; i++)
+        a0 += taskExeTime[i];
 
-   		for(int z = 0; z < unschedulableEvent; z++)
-		{				
-			a1=0;
-				
-			for(int j=0; j<(unschedulableEvent-1); j++)
-				a1 += (ceil(a0/taskPeriod[j]))*taskExeTime[j];
-			a1 += taskExeTime[unschedulableEvent-1];
-				
-			if(a1==a0)
-				{
-					check=1;
-					goto label;
-				}
-			else
-				a0=a1;
-		}
+        for(int z = 0; z < unschedulableEvent; z++)
+        {               
+            a1=0;
+                
+            for(int j=0; j<(unschedulableEvent-1); j++)
+                a1 += (ceil(a0/taskPeriod[j]))*taskExeTime[j];
+            a1 += taskExeTime[unschedulableEvent-1];
+                
+            if(a1==a0)
+                {
+                    check=1;
+                    goto label;
+                }
+            else
+                a0=a1;
+        }
 
-		label:
-		if(check==1)	
-			return true;
-		else	
-			return false;
+        label:
+        if(check==1)    
+            return true;
+        else    
+            return false;
 }
 
 /**
  *      \class  Schedular
  *      \fn     Schedular :: Timeline(float maxTask)
  *      \brief  If the tasks are schedulable then
- *				Sort the tasks according to priority(1/period)
+ *              Sort the tasks according to priority(1/period)
  *
- *				Generate a timeline for all the tasks
+ *              Generate a timeline for all the tasks
  *
  *      \param  maxTask Max. no of tasks
  */
@@ -151,13 +151,13 @@ bool Schedular :: ResponseTimeMethod(float maxTask)
 void Schedular :: Timeline(int maxTask)
 {
 
-	for(auto i=0; i<maxTask; i++)
-	{
+    for(auto i=0; i<maxTask; i++)
+    {
         auto min=i;
         
         for(auto j=i+1;j<maxTask;j++)
         {
-        	if(taskPeriod[min] > taskPeriod[j])
+            if(taskPeriod[min] > taskPeriod[j])
             {
                 min=j;
             }
@@ -178,11 +178,11 @@ void Schedular :: Timeline(int maxTask)
 
     cout<<"\nTask Prority is as follows(Decreasing order):";
     for(auto i=0; i<maxTask; i++)
-    	cout<<"task"<<taskPriority[i]<<" ";
-    	cout<<endl;
+        cout<<"task"<<taskPriority[i]<<" ";
+        cout<<endl;
 
     cout<<"\n\tTIMELINE"
-    	<<"\nTask\tFrom\tTo";
+        <<"\nTask\tFrom\tTo";
 
     auto timeCheck=0;
     vector<int> periodCheck;
@@ -190,30 +190,30 @@ void Schedular :: Timeline(int maxTask)
 
     for(auto i=0; i<maxTask; i++)
     {
-    	periodCheck[i]=1;	
-    	cout<<"\n"<<taskPriority[i]<<"."<<periodCheck[i]
-    		<<"\t"<<timeCheck
-    		<<"\t"<<timeCheck+taskExeTime[i];
+        periodCheck[i]=1;   
+        cout<<"\n"<<taskPriority[i]<<"."<<periodCheck[i]
+            <<"\t"<<timeCheck
+            <<"\t"<<timeCheck+taskExeTime[i];
 
-    	timeCheck += taskExeTime[i];
-    	
+        timeCheck += taskExeTime[i];
+        
     }
 
     while(timeCheck < taskPeriod[maxTask-1])
     {
-    	for (auto i = 0; i < maxTask; ++i)
-    	{ 
-    		if(timeCheck >= taskPeriod[i]*periodCheck[i])
-    		{
-    			periodCheck[i]++;
-    			cout<<"\n"<<taskPriority[i]<<"."<<periodCheck[i]
-    				<<"\t"<<timeCheck
-    				<<"\t"<<timeCheck+taskExeTime[i];
+        for (auto i = 0; i < maxTask; ++i)
+        { 
+            if(timeCheck >= taskPeriod[i]*periodCheck[i])
+            {
+                periodCheck[i]++;
+                cout<<"\n"<<taskPriority[i]<<"."<<periodCheck[i]
+                    <<"\t"<<timeCheck
+                    <<"\t"<<timeCheck+taskExeTime[i];
 
-    			timeCheck += taskExeTime[i];			
-    			
-    		}	
-    	}
+                timeCheck += taskExeTime[i];            
+                
+            }   
+        }
     }
 }
 
@@ -238,7 +238,7 @@ void Schedular :: Main()
 
     for(auto i = 0; i < maxTask; i++)
     {
-    	cout<<"\nEnter Period";
+        cout<<"\nEnter Period";
         cin >> taskPeriod[i];
 
         cout<<"\nEnter Exe time";
@@ -249,16 +249,16 @@ void Schedular :: Main()
 
     ProcessorUtilization(maxTask);
     if(Theorem2(maxTask))
-    	cout<<"\nTasks are schedulabe using Theorem 2";
+        cout<<"\nTasks are schedulabe using Theorem 2";
     else
-    	cout<<"\nTasks are not schedulabe using Theorem 2";
+        cout<<"\nTasks are not schedulabe using Theorem 2";
    
     if(ResponseTimeMethod(maxTask))
     {
         cout << "\n Tasks are schedulable using Response Time Method" << endl;
     
         Timeline(maxTask);
-	}
+    }
     else
        cout << "\n Tasks are not schedulable!" << endl;
     
