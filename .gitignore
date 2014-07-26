@@ -21,6 +21,7 @@
 *.app
 
 .*.swp
-.*.swp
 .*.swo
+.*.swn
+
 build

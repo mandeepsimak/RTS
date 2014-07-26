@@ -24,23 +24,32 @@
 class Schedular
 {
     private:
-        int maxTask;                                           /**< Max Task */
+        int maxTask,                                           /**< Max Task */
+            unschedulableEvent;
+
         float maxProUtilization,          /**< Total Processor Utilization 
                                               by all tasks */
-              overloadProUtilization;          /**< processor utilization 
+              overloadProUtilization,          /**< processor utilization 
                                                  under transient overload*/
+              deadlineTime;               /**<time to check if tasks meet
+                                            their deadlines in case they exceed
+                                            processor utilization Upper Limit*/
+
 
         FLOAT_VEC taskExeTime,                      /**< Task Execution Time */
                   taskPeriod,                               /**< Task Period */
-                  taskUtiliation;                 /**< Processor Utilization */
-        
-        STRING_VEC taskPriority;                        /**< Task's Priority */
+                  taskUtilization;                 /**< Processor Utilization */
+                  
+          INT_VEC taskPriority;                        /**< Task's Priority */
 
     public:
         Schedular();
-        void ProcessorUtilization(int maxTask);
-        bool IsTaskSchedulable(float maxProUtilization, float maxTask);
+        void ProcessorUtilization(float maxTask);
+        bool Theorem2(float maxTask);
+        bool ResponseTimeMethod(float maxTask);
         void Main();
+        void Timeline(int);
+        
         ~Schedular();
 };
 
